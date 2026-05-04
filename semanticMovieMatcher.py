@@ -2,6 +2,7 @@ import pandas as pd
 import numpy as np
 
 
+
 movies = pd.read_csv("tmdb_5000_movies.csv")
 credits = pd.read_csv("tmdb_5000_credits.csv")
 
@@ -97,4 +98,36 @@ print(new_df.head(1))
 new_df["tags"] = new_df["tags"].apply(lambda x: " ".join(x) if isinstance(x, list) else "")
 
 #movie_id ve title bizim referans noktalarımız, model sadece tags üzerinden benzetme yapacak
+
+from sklearn.feature_extraction.text import CountVectorizer
+cv = CountVectorizer(max_features=5000, stop_words="english") #en fazla tekrar eden 5000 kelime alır, ingilizce stop word'leri çıkarır
+vectors = cv.fit_transform(new_df["tags"]).toarray()
+print(vectors.shape)
+
+
+from sklearn.metrics.pairwise import cosine_similarity #iki veri arasındaki benzerliği ölçmek için kullanılan bir matematik formülü
+similarity = cosine_similarity(vectors) #benzerlik haritası yarattık
+print(similarity.shape)
+
+
+def recommend(movie):
+    movie_index = new_df[new_df["title"] == movie].index[0]
+    distances = similarity[movie_index]
+    movie_list = sorted(list(enumerate(distances)), reverse=True, key=lambda x: x[1])[1:6] #reverse=true büyükten küçüğe
+    #enumarate sayesinde (x,y)-> x. satırdaki film %y benziyor
+    
+    print(f"\n '{movie}' sevenler bunları da sevdi: \n")
+    for i in movie_list:
+        print(new_df.iloc[i[0]].title) #iloc ile satıra gidip .title ismini çekeriz
+
+recommend("Pulp Fiction")
+recommend("Avatar")
+
+        
+
+
+
+
+
+
 
