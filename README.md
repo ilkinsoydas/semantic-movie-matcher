@@ -2,6 +2,11 @@
 
 Bu proje, sadece basit anahtar kelime eşleşmelerine dayanmayan, **içerik ve yaratıcı (Yönetmen/Oyuncu) dengesini** matematiksel olarak optimize eden, içerik tabanlı (Content-Based) bir film tavsiye algoritmasıdır. Model, "Yönetmen Sineması" ve "Tür Uyumu" arasındaki dengeyi korumak için özel ağırlıklandırma teknikleri kullanır.
 
+                                                         Görsel örnektir
+
+<img width="900" height="700" alt="image" src="https://github.com/user-attachments/assets/2ef2763f-2179-4c8d-94d5-948451f9a2c5" />
+
+
 ## 🚀 Öne Çıkan Teknik Özellikler
 
 * **Zeki Metin Ön İşleme (NLP):** `NLTK PorterStemmer` kullanılarak kelimeler köklerine indirgenmiştir. Bu sayede "space", "spaces" ve "spacing" gibi kelimelerin aynı anlamsal paydada buluşması sağlanmıştır.
