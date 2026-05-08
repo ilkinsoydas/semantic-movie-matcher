@@ -1,6 +1,8 @@
 import pandas as pd
 import numpy as np
 import pickle
+from nltk.stem.porter import PorterStemmer
+
 
 
 movies = pd.read_csv("tmdb_5000_movies.csv")
@@ -97,6 +99,16 @@ print(new_df.head(1))
 
 new_df["tags"] = new_df["tags"].apply(lambda x: " ".join(x) if isinstance(x, list) else "")
 
+ps = PorterStemmer()
+def stem(text):
+    y = []
+    for i in text.split():
+        y.append(ps.stem(i))
+    return " ".join(y)
+
+new_df["tags"] = new_df["tags"].apply(lambda x: x.lower())
+new_df["tags"] = new_df["tags"].apply(stem) #kelimeleri köklerine ayır
+
 #movie_id ve title bizim referans noktalarımız, model sadece tags üzerinden benzetme yapacak
 
 from sklearn.feature_extraction.text import CountVectorizer
@@ -118,7 +130,7 @@ def recommend(movie):
     
     print(f"\n '{movie}' sevenler bunları da sevdi: \n")
     for i in movie_list:
-        print(new_df.iloc[i[0]].title) #iloc ile satıra gidip .title ismini çekeriz
+        print(f"{new_df.iloc[i[0]].title} -> benzerlik puanı: {i[1]:.4f}") #iloc ile satıra gidip .title ismini çekeriz
 
 recommend("Pulp Fiction")
 recommend("Avatar")
