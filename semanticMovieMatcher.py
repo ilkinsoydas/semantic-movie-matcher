@@ -1,6 +1,6 @@
 import pandas as pd
 import numpy as np
-
+import pickle
 
 
 movies = pd.read_csv("tmdb_5000_movies.csv")
@@ -122,6 +122,10 @@ def recommend(movie):
 
 recommend("Pulp Fiction")
 recommend("Avatar")
+
+
+pickle.dump(new_df, open("movie_dict.pkl", "wb")) #wb->write binary, 0-1ler ile
+pickle.dump(similarity, open("similarity.pkl", "wb"))
 
         
 
