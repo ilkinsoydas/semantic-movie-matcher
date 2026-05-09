@@ -92,7 +92,7 @@ movies["crew"] = movies["crew"].apply(remove_spaces)
 movies["overview"] = movies["overview"].apply(lambda x: x.split() if isinstance(x, str) else [])
 print(movies.head(2))
 
-movies["tags"] = movies["overview"] + movies["genres"] + movies["keywords"] + movies["cast"] + movies["crew"]
+movies["tags"] = movies["overview"] + (movies["genres"] * 5) + movies["keywords"] + movies["cast"] + (movies["crew"] * 3)
 
 new_df = movies[["movie_id", "title", "tags"]]
 print(new_df.head(1))
